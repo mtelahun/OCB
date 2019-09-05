@@ -117,6 +117,20 @@ Running the server
 
     select the tests to run by using tags.
 
+.. option:: --screenshots
+
+    Specify directory where to write screenshots when an HttpCase.browser_js test
+    fails. It defaults to :file:`/tmp/odoo_tests/{db_name}/screenshots`
+
+.. option:: --screencasts
+
+    Enable screencasts and specify directory where to write screencasts files.
+    The ``ffmpeg`` utility needs to be installed to encode frames into a video
+    file. Otherwise frames will be kept instead of the video file.
+    
+    ``1``, ``t`` or ``true`` can be used to use the same directory as the above
+    mentioned ``--screenshots`` option.
+
 .. option:: --dev <feature,feature,...,feature>
 
     * ``all``: all the features below are activated
@@ -213,6 +227,12 @@ database
 
     when creating new databases from the database-management screens, use the
     specified `template database`_. Defaults to ``template0``.
+
+.. option:: --pg_path </path/to/postgresql/binaries>
+
+    Path to the PostgreSQL binaries that are used by the database manager to
+    dump and restore databases. You have to specify this option only if these
+    binaries are located in a non-standard directory.
 
 .. option:: --no-database-list
 
