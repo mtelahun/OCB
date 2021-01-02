@@ -12,14 +12,15 @@
 # Sandra Franch <sandra.franch@upc.edu>, 2020
 # Manel Fernandez Ramirez <manelfera@outlook.com>, 2020
 # Arnau Ros, 2020
+# jabelchi <jabelchi@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~13.5\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 07:28+0000\n"
+"POT-Creation-Date: 2020-10-29 15:48+0000\n"
 "PO-Revision-Date: 2020-09-07 08:21+0000\n"
-"Last-Translator: Arnau Ros, 2020\n"
+"Last-Translator: jabelchi <jabelchi@gmail.com>, 2020\n"
 "Language-Team: Catalan (https://www.transifex.com/odoo/teams/41243/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1118,11 +1119,9 @@ msgstr "Clicar aquí per acceptar aquesta pregunta"
 #. module: website_forum
 #: model_terms:ir.ui.view,arch_db:website_forum.header
 msgid ""
-"Click here to send a verification email allowing you to participate to the "
+"Click here to send a verification email allowing you to participate in the "
 "forum."
 msgstr ""
-"Feu click aquí per enviar un correu electrònic de verificació que li permet "
-"participar en el fòrum."
 
 #. module: website_forum
 #. openerp-web
@@ -1439,7 +1438,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_forum.post_comment
 #, python-format
 msgid "Discard"
-msgstr "Rebutgi"
+msgstr "Descartar"
 
 #. module: website_forum
 #: model:gamification.badge,name:website_forum.badge_6
@@ -2239,7 +2238,7 @@ msgstr "El Meu Vot"
 #: model_terms:ir.ui.view,arch_db:website_forum.forum_nav_header
 #: model_terms:ir.ui.view,arch_db:website_forum.user_sidebar
 msgid "My profile"
-msgstr ""
+msgstr "El meu perfil"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_tag__name
@@ -2620,7 +2619,7 @@ msgstr "Públic"
 #. module: website_forum
 #: model:ir.model.fields,help:website_forum.field_forum_forum__privacy
 msgid ""
-"Public: Forum is pubic\n"
+"Public: Forum is public\n"
 "Signed In: Forum is visible for signed in users\n"
 "Some users: Forum and their content are hidden for non members of selected group"
 msgstr ""
@@ -2630,7 +2629,7 @@ msgstr ""
 #: code:addons/website_forum/static/src/xml/website_forum_templates.xml:0
 #, python-format
 msgid ""
-"Public: Forum is pubic\\nSigned In: Forum is visible for signed in "
+"Public: Forum is public\\nSigned In: Forum is visible for signed in "
 "users\\nSome users: Forum and their content are hidden for non members of "
 "selected group"
 msgstr ""
@@ -3619,7 +3618,7 @@ msgstr ""
 
 #. module: website_forum
 #: model_terms:ir.ui.view,arch_db:website_forum.header
-msgid "You may now participate to our forums."
+msgid "You may now participate in our forums."
 msgstr ""
 
 #. module: website_forum
@@ -3772,7 +3771,7 @@ msgstr ""
 #: model_terms:forum.forum,faq:website_forum.forum_help
 #: model_terms:ir.ui.view,arch_db:website_forum.default_faq
 msgid "how to develop modules for your own need,"
-msgstr ""
+msgstr "com desenvolupar mòduls per a les vostres necessitats,"
 
 #. module: website_forum
 #: model_terms:forum.forum,faq:website_forum.forum_help

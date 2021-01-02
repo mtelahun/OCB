@@ -332,6 +332,9 @@ MockServer.include({
      * @returns {Object}
      */
     _mockRouteMailGetSuggestedRecipient(model, res_ids) {
+        if (model === 'res.fake') {
+            return this._mockResFake_MessageGetSuggestedRecipients(model, res_ids);
+        }
         return this._mockMailThread_MessageGetSuggestedRecipients(model, res_ids);
     },
     /**
@@ -395,6 +398,8 @@ MockServer.include({
 
         const shortcodes = this._getRecords('mail.shortcode', []);
 
+        const commands = this._getRecords('mail.channel_command', []);
+
         const starredCounter = this._getRecords('mail.message', [
             ['starred_partner_ids', 'in', this.currentPartnerId],
         ]).length;
@@ -405,11 +410,7 @@ MockServer.include({
                 channel_direct_message: directMessageInfos,
                 channel_private_group: privateGroupInfos,
             },
-            commands: [{
-                channel_types: ["channel", "chat"],
-                help: "List users in the current channel",
-                name: "who",
-            }],
+            commands,
             current_partner: currentPartnerFormat,
             current_user_id: this.currentUserId,
             mail_failures: mailFailures,
@@ -743,12 +744,16 @@ MockServer.include({
                 ['is_read', '=', false],
                 ['mail_message_id', 'in', messages.map(message => message.id)],
             ]).length;
-            return Object.assign({}, channel, {
+            const res = Object.assign({}, channel, {
                 info: extra_info,
                 last_message_id: lastMessageId,
                 members,
                 message_needaction_counter: messageNeedactionCounter,
             });
+            if (channel.channel_type === 'channel') {
+                delete res.members;
+            }
+            return res;
         });
     },
     /**
@@ -846,7 +851,8 @@ MockServer.include({
      * @private
      */
     _mockMailChannelExecuteCommand(args) {
-        const [ids, commandName] = args.args;
+        const ids = args.args[0];
+        const commandName = args.kwargs.command || args.args[1];
         const channels = this._getRecords('mail.channel', [['id', 'in', ids]]);
         if (commandName === 'leave') {
             for (const channel of channels) {
@@ -859,6 +865,24 @@ MockServer.include({
                     Object.assign({}, channel, { info: 'unsubscribe' })
                 ];
                 this._widget.call('bus_service', 'trigger', 'notification', [notifConfirmUnpin]);
+            }
+            return;
+        } else if (commandName === 'who') {
+            for (const channel of channels) {
+                const members = channel.members.map(memberId => this._getRecords('res.partner', [['id', '=', memberId]])[0].name);
+                let message = "You are alone in this channel.";
+                if (members.length > 0) {
+                    message = `Users in this channel: ${members.join(', ')} and you`;
+                }
+                const notification = [
+                    ["dbName", 'res.partner', this.currentPartnerId],
+                    {
+                        'body': `<span class="o_mail_notification">${message}</span>`,
+                        'channel_ids': [channel.id],
+                        'info': 'transient_message',
+                    }
+                ];
+                this._widget.call('bus_service', 'trigger', 'notification', [notification]);
             }
             return;
         }
@@ -963,7 +987,7 @@ MockServer.include({
             this._mockWrite('mail.channel', [
                 [channel.id],
                 { message_unread_counter: (channel.message_unread_counter || 0) + 1 },
-            ])
+            ]);
         }
         return messageId;
     },
@@ -983,10 +1007,12 @@ MockServer.include({
         } else {
             partner_id = this.currentPartnerId;
         }
+        const partner = this._getRecords('res.partner', [['id', '=', partner_id]]);
         const data = {
             'info': 'typing_status',
             'is_typing': is_typing,
             'partner_id': partner_id,
+            'partner_name': partner.name,
         };
         const notifications = [];
         for (const channel of channels) {
@@ -1194,13 +1220,20 @@ MockServer.include({
             notifications = this._mockMailNotification_NotificationFormat(
                 notifications.map(notification => notification.id)
             );
-            return Object.assign({}, message, {
+            const response = Object.assign({}, message, {
                 attachment_ids: formattedAttachments,
                 author_id: formattedAuthor,
                 history_partner_ids: historyPartnerIds,
                 needaction_partner_ids: needactionPartnerIds,
                 notifications,
             });
+            if (message.subtype_id) {
+                const subtype = this._getRecords('mail.message.subtype', [
+                    ['id', '=', message.subtype_id],
+                ])[0];
+                response.subtype_description = subtype.description;
+            }
+            return response;
         });
     },
     /**
@@ -1481,6 +1514,44 @@ MockServer.include({
         return result;
     },
     /**
+     * Simulates `_message_get_suggested_recipients` on `res.fake`.
+     *
+     * @private
+     * @param {string} model
+     * @param {integer[]} ids
+     * @returns {Object}
+     */
+    _mockResFake_MessageGetSuggestedRecipients(model, ids) {
+        const result = {};
+        const records = this._getRecords(model, [['id', 'in', ids]]);
+
+        for (const record of records) {
+            result[record.id] = [];
+            if (record.email_cc) {
+                result[record.id].push([
+                    false,
+                    record.email_cc,
+                    'CC email',
+                ]);
+            }
+            const partners = this._getRecords(
+                'res.partner',
+                [['id', 'in', record.partner_ids]],
+            );
+            if (partners.length) {
+                for (const partner of partners) {
+                    result[record.id].push([
+                        partner.id,
+                        partner.display_name,
+                        'Email partner',
+                    ]);
+                }
+            }
+        }
+
+        return result;
+    },
+    /**
      * Simulates `message_post` on `mail.thread`.
      *
      * @private
@@ -1714,9 +1785,11 @@ MockServer.include({
             { active_test: false }
         )[0];
         return {
-            "id": partner.id,
-            "display_name": partner.display_name,
             "active": partner.active,
+            "display_name": partner.display_name,
+            "id": partner.id,
+            "im_status": partner.im_status,
+            "name": partner.name,
         };
     },
 });

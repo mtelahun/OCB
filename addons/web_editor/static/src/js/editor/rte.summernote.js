@@ -440,14 +440,13 @@ eventHandler.modules.imageDialog.showImageDialog = function ($editable) {
     var media = $(r.sc).parents().addBack().filter(function (i, el) {
         return dom.isImg(el);
     })[0];
+    var options = $editable.closest('.o_editable, .note-editor').data('options');
     topBus.trigger('media_dialog_demand', {
         $editable: $editable,
         media: media,
         options: {
             onUpload: $editable.data('callbacks').onUpload,
-            noVideos:
-              $editable.data('oe-model') === "mail.compose.message" ||
-              ($editable.data('options') && $editable.data('options').noVideos),
+            noVideos: options && options.noVideos,
         },
         onSave: function (media) {
             if(media && !document.body.contains(media)) {
@@ -1211,11 +1210,15 @@ var SummernoteManager = Class.extend(mixins.EventDispatcherMixin, ServicesMixin,
         }
         data.__alreadyDone = true;
 
+        const model = data.$editable.data('oe-model');
+        const field = data.$editable.data('oe-field');
+        const type = data.$editable.data('oe-type');
         var mediaDialog = new weWidgets.MediaDialog(this,
             _.extend({
-                res_model: data.$editable.data('oe-model'),
+                res_model: model,
                 res_id: data.$editable.data('oe-id'),
                 domain: data.$editable.data('oe-media-domain'),
+                useMediaLibrary: field && (model === 'ir.ui.view' && field === 'arch' || type === 'html'),
             }, data.options),
             data.media
         );

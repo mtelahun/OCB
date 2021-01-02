@@ -230,6 +230,32 @@ class TestFields(TransactionCaseWithUserDemo):
             sum(invalid_transitive_depends in field_triggers.get(None, []) for field_triggers in triggers.values()), 1
         )
 
+    @mute_logger('odoo.fields')
+    def test_10_computed_stored_x_name(self):
+        # create a custom model with two fields
+        self.env["ir.model"].create({
+            "name": "x_test_10_compute_store_x_name",
+            "model": "x_test_10_compute_store_x_name",
+            "field_id": [
+                (0, 0, {'name': 'x_name', 'ttype': 'char'}),
+                (0, 0, {'name': 'x_stuff_id', 'ttype': 'many2one', 'relation': 'ir.model'}),
+            ],
+        })
+        # set 'x_stuff_id' refer to a model not loaded yet
+        self.cr.execute("""
+            UPDATE ir_model_fields
+            SET relation = 'not.loaded'
+            WHERE model = 'x_test_10_compute_store_x_name' AND name = 'x_stuff_id'
+        """)
+        # set 'x_name' be computed and depend on 'x_stuff_id'
+        self.cr.execute("""
+            UPDATE ir_model_fields
+            SET compute = 'pass', depends = 'x_stuff_id.x_custom_1'
+            WHERE model = 'x_test_10_compute_store_x_name' AND name = 'x_name'
+        """)
+        # setting up models should not crash
+        self.registry.setup_models(self.cr)
+
     def test_10_display_name(self):
         """ test definition of automatic field 'display_name' """
         field = type(self.env['test_new_api.discussion']).display_name
@@ -421,20 +447,42 @@ class TestFields(TransactionCaseWithUserDemo):
         b = self.env['test_new_api.recursive'].create({'name': 'B', 'parent': a.id})
         c = self.env['test_new_api.recursive'].create({'name': 'C', 'parent': b.id})
         d = self.env['test_new_api.recursive'].create({'name': 'D', 'parent': c.id})
+        self.assertEqual(a.full_name, 'A')
+        self.assertEqual(b.full_name, 'A / B')
+        self.assertEqual(c.full_name, 'A / B / C')
+        self.assertEqual(d.full_name, 'A / B / C / D')
         self.assertEqual(a.display_name, 'A')
         self.assertEqual(b.display_name, 'A / B')
         self.assertEqual(c.display_name, 'A / B / C')
         self.assertEqual(d.display_name, 'A / B / C / D')
 
+        a.name = 'A1'
+        self.assertEqual(a.full_name, 'A1')
+        self.assertEqual(b.full_name, 'A1 / B')
+        self.assertEqual(c.full_name, 'A1 / B / C')
+        self.assertEqual(d.full_name, 'A1 / B / C / D')
+        self.assertEqual(a.display_name, 'A1')
+        self.assertEqual(b.display_name, 'A1 / B')
+        self.assertEqual(c.display_name, 'A1 / B / C')
+        self.assertEqual(d.display_name, 'A1 / B / C / D')
+
         b.parent = False
-        self.assertEqual(a.display_name, 'A')
+        self.assertEqual(a.full_name, 'A1')
+        self.assertEqual(b.full_name, 'B')
+        self.assertEqual(c.full_name, 'B / C')
+        self.assertEqual(d.full_name, 'B / C / D')
+        self.assertEqual(a.display_name, 'A1')
         self.assertEqual(b.display_name, 'B')
         self.assertEqual(c.display_name, 'B / C')
         self.assertEqual(d.display_name, 'B / C / D')
 
         # rename several records to trigger several recomputations at once
         (d + c + b).write({'name': 'X'})
-        self.assertEqual(a.display_name, 'A')
+        self.assertEqual(a.full_name, 'A1')
+        self.assertEqual(b.full_name, 'X')
+        self.assertEqual(c.full_name, 'X / X')
+        self.assertEqual(d.full_name, 'X / X / X')
+        self.assertEqual(a.display_name, 'A1')
         self.assertEqual(b.display_name, 'X')
         self.assertEqual(c.display_name, 'X / X')
         self.assertEqual(d.display_name, 'X / X / X')
@@ -645,6 +693,29 @@ class TestFields(TransactionCaseWithUserDemo):
         self.assertEqual(record.bare, False)
         self.assertEqual(record.bars, False)
         self.assertEqual(record.bares, False)
+
+    def test_16_compute_unassigned_access_error(self):
+        # create a real record
+        record = self.env['test_new_api.compute.unassigned'].create({})
+        record.flush()
+
+        # alter access rights: regular users cannot read 'record'
+        access = self.env.ref('test_new_api.access_test_new_api_compute_unassigned')
+        access.perm_read = False
+
+        # switch to environment with user demo
+        record = record.with_user(self.user_demo)
+        record.env.cache.invalidate()
+
+        # check that the record is not accessible
+        with self.assertRaises(AccessError):
+            record.bars
+
+        # modify the record and flush() changes with the current environment:
+        # this should not trigger an access error, even if unassigned computed
+        # fields are fetched from database
+        record.foo = "X"
+        record.flush()
 
     def test_20_float(self):
         """ test rounding of float fields """
@@ -1089,6 +1160,32 @@ class TestFields(TransactionCaseWithUserDemo):
         self.assertEqual(bar.foo, oof)
         self.assertIn(bar, bar.search([('foo', 'in', oof.ids)]))
 
+    def test_25_one2many_inverse_related(self):
+        left = self.env['test_new_api.trigger.left'].create({})
+        right = self.env['test_new_api.trigger.right'].create({})
+        self.assertFalse(left.right_id)
+        self.assertFalse(right.left_ids)
+        self.assertFalse(right.left_size)
+
+        # create middle: this should trigger left.right_id by traversing
+        # middle.left_id, and right.left_size by traversing left.right_id
+        # after its computation!
+        middle = self.env['test_new_api.trigger.middle'].create({
+            'left_id': left.id,
+            'right_id': right.id,
+        })
+        self.assertEqual(left.right_id, right)
+        self.assertEqual(right.left_ids, left)
+        self.assertEqual(right.left_size, 1)
+
+        # delete middle: this should trigger left.right_id by traversing
+        # middle.left_id, and right.left_size by traversing left.right_id
+        # before its computation!
+        middle.unlink()
+        self.assertFalse(left.right_id)
+        self.assertFalse(right.left_ids)
+        self.assertFalse(right.left_size)
+
     def test_26_inherited(self):
         """ test inherited fields. """
         # a bunch of fields are inherited from res_partner
@@ -1296,7 +1393,7 @@ class TestFields(TransactionCaseWithUserDemo):
         new_origin = Model.new({'name': 'Bar'}, origin=real_record)
         new_record = Model.new({'name': 'Baz'})
         self.assertEqual(real_record.display_name, 'Foo')
-        self.assertEqual(new_origin.display_name, 'Foo')
+        self.assertEqual(new_origin.display_name, 'Bar')
         self.assertEqual(new_record.display_name, 'Baz')
 
         # computed stored field with recomputation: always computed
@@ -2904,6 +3001,28 @@ class TestSelectionOndeleteAdvanced(common.TransactionCase):
 
         with self.assertRaises(ValueError):
             self.registry.setup_models(self.env.cr)
+
+
+class TestFieldParametersValidation(common.TransactionCase):
+    def test_invalid_parameter(self):
+        self.addCleanup(self.registry.model_cache.clear)
+
+        class Foo(models.Model):
+            _module = None
+            _name = _description = 'test_new_api.field_parameter_validation'
+
+            name = fields.Char(invalid_parameter=42)
+
+        Foo._build_model(self.registry, self.env.cr)
+        self.addCleanup(self.registry.__delitem__, Foo._name)
+
+        with self.assertLogs('odoo.fields', level='WARNING') as cm:
+            self.registry.setup_models(self.env.cr)
+
+        self.assertTrue(cm.output[0].startswith(
+            "WARNING:odoo.fields:Field test_new_api.field_parameter_validation.name: "
+            "unknown parameter 'invalid_parameter'"
+        ))
 
 
 def insert(model, *fnames):

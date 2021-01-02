@@ -160,6 +160,14 @@ var DebouncedField = AbstractField.extend({
      * @returns {*}
      */
     _getValue: function () {},
+    /**
+     * Should make an action on lost focus.
+     *
+     * @abstract
+     * @private
+     * @returns {*}
+     */
+    _onBlur: function () {},
 });
 
 var InputField = DebouncedField.extend({
@@ -169,6 +177,7 @@ var InputField = DebouncedField.extend({
     events: _.extend({}, DebouncedField.prototype.events, {
         'input': '_onInput',
         'change': '_onChange',
+        'blur' : '_onBlur',
     }),
 
     /**
@@ -953,7 +962,7 @@ var FieldDateTime = FieldDate.extend({
     },
 });
 
-const RemainingDays = FieldDate.extend({
+const RemainingDays = AbstractField.extend({
     description: _lt("Remaining Days"),
     supportedFieldTypes: ['date', 'datetime'],
 
@@ -968,7 +977,7 @@ const RemainingDays = FieldDate.extend({
      *
      * @override
      */
-    _renderReadonly() {
+    _render() {
         if (this.value === false) {
             this.$el.removeClass('text-bf text-danger text-warning');
             return;

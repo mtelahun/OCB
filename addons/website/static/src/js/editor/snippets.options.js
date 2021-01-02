@@ -39,7 +39,15 @@ const UrlPickerUserValueWidget = InputUserValueWidget.extend({
         this.containerEl.appendChild(linkButton);
         this.el.classList.add('o_we_large_input');
         this.inputEl.classList.add('text-left');
-        wUtils.autocompleteWithPages(this, $(this.inputEl));
+        const options = {
+            position: {
+                collision: 'flip fit',
+            },
+            classes: {
+                "ui-autocomplete": 'o_website_ui_autocomplete'
+            },
+        }
+        wUtils.autocompleteWithPages(this, $(this.inputEl), options);
     },
 
     //--------------------------------------------------------------------------
@@ -795,7 +803,7 @@ options.registry.OptionsTab = options.Class.extend({
         // TODO improve: hack to click on external image picker
         this.bodyImageType = widgetValue;
         const widget = this._requestUserValueWidgets(params.imagepicker)[0];
-        widget.$el.click();
+        widget.enable();
     },
     /**
      * @override
@@ -1275,7 +1283,7 @@ options.registry.CarouselItem = options.Class.extend({
         const $items = this.$carousel.find('.carousel-item');
         this.$controls.removeClass('d-none');
         this.$indicators.append($('<li>', {
-            'data-target': '#' + this.$target.attr('id'),
+            'data-target': '#' + this.$carousel.attr('id'),
             'data-slide-to': $items.length,
         }));
         this.$indicators.append(' ');
@@ -1631,7 +1639,7 @@ options.registry.Parallax = options.Class.extend({
             // The parallax option was enabled but the background image was
             // removed: disable the parallax option.
             const widget = this._requestUserValueWidgets('parallax_none_opt')[0];
-            widget.$el.click();
+            widget.enable();
             widget.getParent().close(); // FIXME remove this ugly hack asap
         }
     },
@@ -1766,12 +1774,19 @@ const VisibilityPageOptionUpdate = options.Class.extend({
      * @override
      */
     async onTargetShow() {
+        if (await this._isShown()) {
+            // onTargetShow may be called even if the element is already shown.
+            // In most cases, this is not a problem but here it is as the code
+            // that follows clicks on the visibility checkbox regardless of its
+            // status. This avoids searching for that checkbox entirely.
+            return;
+        }
         // TODO improve: here we make a hack so that if we make the invisible
         // header appear for edition, its actual visibility for the page is
         // toggled (otherwise it would be about editing an element which
         // is actually never displayed on the page).
         const widget = this._requestUserValueWidgets(this.showOptionWidgetName)[0];
-        widget.$el.click();
+        widget.enable();
     },
 
     //--------------------------------------------------------------------------
@@ -2306,8 +2321,15 @@ options.registry.CoverProperties = options.Class.extend({
     updateUI: async function () {
         await this._super(...arguments);
 
+        // TODO: `o_record_has_cover` should be handled using model field, not
+        // resize_class to avoid all of this.
+        let coverClass = this.$el.find('[data-cover-opt-name="size"] we-button.active').data('selectClass') || '';
+        const bg = this.$image.css('background-image');
+        if (bg && bg !== 'none') {
+            coverClass += " o_record_has_cover";
+        }
         // Update saving dataset
-        this.$target[0].dataset.coverClass = this.$el.find('[data-cover-opt-name="size"] we-button.active').data('selectClass') || '';
+        this.$target[0].dataset.coverClass = coverClass;
         this.$target[0].dataset.textAlignClass = this.$el.find('[data-cover-opt-name="text_align"] we-button.active').data('selectClass') || '';
         this.$target[0].dataset.filterValue = this.$filterValueOpts.filter('.active').data('filterValue') || 0.0;
         let colorPickerWidget = null;
