@@ -19,7 +19,7 @@ const DynamicSnippetProducts = DynamicSnippetCarousel.extend({
      * @override
      * @private
      */
-    _isConfigComplete: function() {
+    _isConfigComplete: function () {
         return this._super.apply(this, arguments) && this.$el.get(0).dataset.productCategoryId !== undefined;
     },
     /**
