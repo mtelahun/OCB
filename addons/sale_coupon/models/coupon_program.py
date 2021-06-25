@@ -23,9 +23,10 @@ class CouponProgram(models.Model):
             'name': _('Sales Orders'),
             'view_mode': 'tree,form',
             'res_model': 'sale.order',
+            'search_view_id': [self.env.ref('sale.sale_order_view_search_inherit_quotation').id],
             'type': 'ir.actions.act_window',
-            'domain': [('id', 'in', orders.ids), ('state', 'not in', ('draft', 'sent', 'cancel'))],
-            'context': dict(self._context, create=False)
+            'domain': [('id', 'in', orders.ids)],
+            'context': dict(self._context, create=False),
         }
 
     def _check_promo_code(self, order, coupon_code):
@@ -174,6 +175,11 @@ class CouponProgram(models.Model):
             # Checking if rewards are in the SO should not be performed for rewards on_next_order
             programs += programs_curr_order._filter_not_ordered_reward_programs(order)
         return programs
+
+    def _get_discount_product_values(self):
+        res = super()._get_discount_product_values()
+        res['invoice_policy'] = 'order'
+        return res
 
     def _is_global_discount_program(self):
         self.ensure_one()

@@ -7,6 +7,7 @@
 # Martin Trigaux, 2020
 # Hamid Darabi, 2020
 # Faraz Sadri Alamdari <ifarazir@gmail.com>, 2020
+# Mohsen Mohammadi <iammohsen.123@gmail.com>, 2021
 # Hamed Mohammadi <hamed@dehongi.com>, 2021
 # 
 msgid ""
@@ -191,7 +192,7 @@ msgstr "ایجاد شده در"
 #. module: crm_iap_lead
 #: model_terms:ir.ui.view,arch_db:crm_iap_lead.crm_iap_lead_mining_request_form
 msgid "Default Tags"
-msgstr ""
+msgstr "برچسپ‌های پیش‌فرض"
 
 #. module: crm_iap_lead
 #: model:ir.model.fields,field_description:crm_iap_lead.field_crm_iap_lead_mining_request__display_lead_label
@@ -344,7 +345,7 @@ msgstr ""
 #. module: crm_iap_lead
 #: model:ir.model.fields,field_description:crm_iap_lead.field_crm_iap_lead_mining_request__industry_ids
 msgid "Industries"
-msgstr ""
+msgstr "صنایع"
 
 #. module: crm_iap_lead
 #: model:ir.model,name:crm_iap_lead.model_crm_iap_lead_industry

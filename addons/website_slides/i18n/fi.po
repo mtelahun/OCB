@@ -3,7 +3,7 @@
 # 	* website_slides
 # 
 # Translators:
-# Antti Hukkanen <antti.hukkanen@mainiotech.fi>, 2020
+# a0002ef8927c0b0b9c58a7cc5f73028e_ba3d803 <aeb43a6499fcef2a5a423b3f4a45b153_32479>, 2020
 # Mikko Salmela <salmemik@gmail.com>, 2020
 # Tuomas Lyyra <tuomas.lyyra@legenda.fi>, 2020
 # Johanna Valkonen <johanna@vividi.fi>, 2020
@@ -25,6 +25,7 @@
 # Pekko Tuomisto <pekko.tuomisto@web-veistamo.fi>, 2020
 # Sari Mäyrä <sari.mayra@sv-oy.fi>, 2020
 # Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2020
+# Mikko Virtanen <mikko.virtanen2013@gmail.com>, 2021
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2021
 # 
 msgid ""
@@ -942,7 +943,7 @@ msgstr "Toimenpiteen tila"
 #. module: website_slides
 #: model:ir.model.fields,field_description:website_slides.field_slide_channel__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Toimenpiteen ikoni"
 
 #. module: website_slides
 #. openerp-web
@@ -1595,7 +1596,7 @@ msgstr "Puulajien lujuuden vertailu"
 #: model:gamification.badge,description:website_slides.badge_data_course
 #: model:gamification.challenge,name:website_slides.badge_data_course_challenge
 msgid "Complete a course"
-msgstr "Suorita kurssi loppuu"
+msgstr "Suorita kurssi loppuun"
 
 #. module: website_slides
 #: model:gamification.badge,description:website_slides.badge_data_profile
@@ -4108,7 +4109,7 @@ msgstr "Tallenna"
 #: code:addons/website_slides/static/src/js/slides_upload.js:0
 #, python-format
 msgid "Save & Publish"
-msgstr ""
+msgstr "Tallenna ja julkaise"
 
 #. module: website_slides
 #. openerp-web
@@ -4214,7 +4215,7 @@ msgstr "Lähetä sähköposti"
 #: model:ir.model.fields,field_description:website_slides.field_slide_channel__seo_name
 #: model:ir.model.fields,field_description:website_slides.field_slide_slide__seo_name
 msgid "Seo name"
-msgstr ""
+msgstr "SEO-nimi"
 
 #. module: website_slides
 #: model:ir.model.fields,field_description:website_slides.field_slide_answer__sequence
