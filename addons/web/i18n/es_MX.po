@@ -4,7 +4,10 @@
 # 
 # Translators:
 # Cécile Collart <cco@odoo.com>, 2021
+# Martin Trigaux, 2021
+# Daniela Cervantes <dace@odoo.com>, 2021
 # Patricia Gutiérrez Capetillo <pagc@odoo.com>, 2021
+# Lucia Pacheco <lpo@odoo.com>, 2021
 # Braulio D. López Vázquez <bdl@odoo.com>, 2021
 # 
 msgid ""
@@ -358,7 +361,7 @@ msgstr ""
 #. module: web
 #: model_terms:ir.ui.view,arch_db:web.report_invoice_wizard_preview
 msgid "<strong>Subtotal</strong>"
-msgstr ""
+msgstr "<strong>Subtotal</strong>"
 
 #. module: web
 #: model_terms:ir.ui.view,arch_db:web.report_invoice_wizard_preview
@@ -380,6 +383,9 @@ msgid ""
 "A popup window has been blocked. You may need to change your browser "
 "settings to allow popup windows for this page."
 msgstr ""
+"Se ha bloqueado una ventana emergente. Es posible que deba cambiar la "
+"configuración de su navegador para permitir ventanas emergentes para esta "
+"página."
 
 #. module: web
 #. openerp-web
@@ -458,7 +464,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/kanban.xml:0
 #, python-format
 msgid "Add"
-msgstr ""
+msgstr "Agregar"
 
 #. module: web
 #. openerp-web
@@ -685,7 +691,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #. module: web
 #. openerp-web
@@ -951,7 +957,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web.view_base_document_layout
 #, python-format
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: web
 #. openerp-web
@@ -1284,7 +1290,7 @@ msgstr ""
 #. module: web
 #: model:ir.model.fields,field_description:web.field_base_document_layout__country_id
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #. module: web
 #. openerp-web
@@ -1407,7 +1413,7 @@ msgstr ""
 #. module: web
 #: model_terms:ir.ui.view,arch_db:web.login
 msgid "Database"
-msgstr ""
+msgstr "Base de datos"
 
 #. module: web
 #. openerp-web
@@ -1466,7 +1472,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/web_calendar.xml:0
 #, python-format
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #. module: web
 #. openerp-web
@@ -1503,7 +1509,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/menu.xml:0
 #, python-format
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #. module: web
 #. openerp-web
@@ -1517,7 +1523,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/kanban.xml:0
 #, python-format
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: web
 #. openerp-web
@@ -1583,7 +1589,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "Domain"
-msgstr ""
+msgstr "Dominio"
 
 #. module: web
 #. openerp-web
@@ -1625,7 +1631,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "Download"
-msgstr ""
+msgstr "Descargar"
 
 #. module: web
 #. openerp-web
@@ -1649,7 +1655,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "Dropdown menu"
-msgstr ""
+msgstr "Menú desplegable"
 
 #. module: web
 #. openerp-web
@@ -1733,7 +1739,7 @@ msgstr ""
 #: code:addons/web/static/src/js/services/crash_manager.js:0
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #. module: web
 #: code:addons/web/controllers/main.py:0
@@ -1811,7 +1817,7 @@ msgstr ""
 #: code:addons/web/static/src/js/widgets/data_export.js:0
 #, python-format
 msgid "External ID"
-msgstr ""
+msgstr "ID externo"
 
 #. module: web
 #. openerp-web
@@ -1870,7 +1876,7 @@ msgstr ""
 #: code:addons/web/static/src/js/fields/basic_fields.js:0
 #, python-format
 msgid "File"
-msgstr ""
+msgstr "Archivo"
 
 #. module: web
 #. openerp-web
@@ -1960,7 +1966,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/name_and_signature.xml:0
 #, python-format
 msgid "Full Name"
-msgstr ""
+msgstr "Nombre completo"
 
 #. module: web
 #. openerp-web
@@ -1983,7 +1989,7 @@ msgstr ""
 #: code:addons/web/static/src/js/views/graph/graph_view.js:0
 #, python-format
 msgid "Graph"
-msgstr ""
+msgstr "Gráfica"
 
 #. module: web
 #. openerp-web
@@ -2205,7 +2211,7 @@ msgstr ""
 #: code:addons/web/static/src/js/chrome/user_menu.js:0
 #, python-format
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Atajos de teclado"
 
 #. module: web
 #: code:addons/web/controllers/main.py:0
@@ -2328,7 +2334,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando…"
 
 #. module: web
 #: model_terms:ir.ui.view,arch_db:web.login
@@ -2580,7 +2586,7 @@ msgstr ""
 #: code:addons/web/static/src/js/views/basic/basic_model.js:0
 #, python-format
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #. module: web
 #. openerp-web
@@ -2619,7 +2625,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/web_calendar.xml:0
 #, python-format
 msgid "Next"
-msgstr ""
+msgstr "Siguiente"
 
 #. module: web
 #. openerp-web
@@ -2806,7 +2812,7 @@ msgstr ""
 #: code:addons/web/static/src/js/services/crash_manager.js:0
 #, python-format
 msgid "Odoo Warning"
-msgstr ""
+msgstr "Advertencia de Odoo"
 
 #. module: web
 #. openerp-web
@@ -2970,7 +2976,7 @@ msgstr ""
 #: code:addons/web/static/src/js/views/kanban/kanban_column_progressbar.js:0
 #, python-format
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #. module: web
 #. openerp-web
@@ -3016,19 +3022,19 @@ msgstr ""
 #. module: web
 #: model:ir.model.fields,field_description:web.field_base_document_layout__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: web
 #: model_terms:ir.ui.view,arch_db:web.login
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/fields/basic_fields.js:0
 #, python-format
 msgid "Percentage"
-msgstr ""
+msgstr "Porcentaje"
 
 #. module: web
 #. openerp-web
@@ -3193,7 +3199,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/web_calendar.xml:0
 #, python-format
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #. module: web
 #. openerp-web
@@ -3212,7 +3218,7 @@ msgstr ""
 #. module: web
 #: model:ir.model.fields,field_description:web.field_base_document_layout__primary_color
 msgid "Primary Color"
-msgstr ""
+msgstr "Color primario"
 
 #. module: web
 #. openerp-web
@@ -3220,14 +3226,14 @@ msgstr ""
 #: code:addons/web/static/src/xml/report.xml:0
 #, python-format
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/fields/basic_fields.js:0
 #, python-format
 msgid "Priority"
-msgstr ""
+msgstr "Prioridad"
 
 #. module: web
 #. openerp-web
@@ -3389,7 +3395,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "Remove"
-msgstr ""
+msgstr "Remover"
 
 #. module: web
 #. openerp-web
@@ -3433,17 +3439,17 @@ msgstr ""
 #: code:addons/web/static/src/js/chrome/action_manager_report.js:0
 #, python-format
 msgid "Report"
-msgstr ""
+msgstr "Reporte"
 
 #. module: web
 #: model:ir.model.fields,field_description:web.field_base_document_layout__report_footer
 msgid "Report Footer"
-msgstr ""
+msgstr "Pie de página del reporte"
 
 #. module: web
 #: model:ir.model.fields,field_description:web.field_base_document_layout__report_layout_id
 msgid "Report Layout"
-msgstr ""
+msgstr "Diseño del reporte"
 
 #. module: web
 #. openerp-web
@@ -3614,7 +3620,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "Select"
-msgstr ""
+msgstr "Seleccionar"
 
 #. module: web
 #: model_terms:ir.ui.view,arch_db:web.login
@@ -3670,7 +3676,7 @@ msgstr ""
 #: code:addons/web/static/src/js/fields/relational_fields.js:0
 #, python-format
 msgid "Selection"
-msgstr ""
+msgstr "Presentación"
 
 #. module: web
 #. openerp-web
@@ -3713,7 +3719,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/kanban.xml:0
 #, python-format
 msgid "Settings"
-msgstr ""
+msgstr "Configuración"
 
 #. module: web
 #. openerp-web
@@ -3834,14 +3840,14 @@ msgstr ""
 #: code:addons/web/static/src/js/views/calendar/calendar_quick_create.js:0
 #, python-format
 msgid "Summary"
-msgstr ""
+msgstr "Resumen"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/web_calendar.xml:0
 #, python-format
 msgid "Summary:"
-msgstr ""
+msgstr "Resumen:"
 
 #. module: web
 #. openerp-web
@@ -3881,7 +3887,7 @@ msgstr ""
 #. module: web
 #: model:ir.model.fields,field_description:web.field_base_document_layout__vat
 msgid "Tax ID"
-msgstr ""
+msgstr "RFC"
 
 #. module: web
 #. openerp-web
@@ -3941,7 +3947,7 @@ msgstr ""
 #: code:addons/web/controllers/main.py:0
 #, python-format
 msgid "The new password and its confirmation must be identical."
-msgstr ""
+msgstr "La nueva contraseña y la confirmación deben ser idénticas."
 
 #. module: web
 #: code:addons/web/controllers/main.py:0
@@ -3949,6 +3955,8 @@ msgstr ""
 msgid ""
 "The old password you provided is incorrect, your password was not changed."
 msgstr ""
+"La antigua contraseña que introdujo no es correcta. Su contraseña no se ha "
+"cambiado."
 
 #. module: web
 #. openerp-web
@@ -4064,7 +4072,7 @@ msgstr ""
 #: code:addons/web/static/src/js/fields/basic_fields.js:0
 #, python-format
 msgid "Time"
-msgstr ""
+msgstr "Tiempo"
 
 #. module: web
 #. openerp-web
@@ -4081,7 +4089,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/web_calendar.xml:0
 #, python-format
 msgid "Today"
-msgstr ""
+msgstr "Hoy"
 
 #. module: web
 #. openerp-web
@@ -4117,7 +4125,7 @@ msgstr ""
 #: code:addons/web/static/src/js/views/pivot/pivot_model.js:0
 #, python-format
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: web
 #. openerp-web
@@ -4169,7 +4177,7 @@ msgstr ""
 #: code:addons/web/static/src/js/fields/basic_fields.js:0
 #, python-format
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #. module: web
 #. openerp-web
@@ -4215,7 +4223,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/kanban.xml:0
 #, python-format
 msgid "Unfold"
-msgstr ""
+msgstr "Desdoblar"
 
 #. module: web
 #. openerp-web
@@ -4362,7 +4370,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #. module: web
 #. openerp-web
@@ -4377,7 +4385,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "Users"
-msgstr ""
+msgstr "Usuarios"
 
 #. module: web
 #. openerp-web
@@ -4459,7 +4467,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:0
 #, python-format
 msgid "Warning"
-msgstr ""
+msgstr "Advertencia"
 
 #. module: web
 #: model_terms:ir.ui.view,arch_db:web.benchmark_suite
@@ -4479,7 +4487,7 @@ msgstr ""
 #. module: web
 #: model:ir.model.fields,field_description:web.field_base_document_layout__website
 msgid "Website Link"
-msgstr ""
+msgstr "Enlace del sitio web"
 
 #. module: web
 #. openerp-web
@@ -4489,7 +4497,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/web_calendar.xml:0
 #, python-format
 msgid "Week"
-msgstr ""
+msgstr "Semana"
 
 #. module: web
 #. openerp-web
@@ -4766,7 +4774,7 @@ msgstr ""
 #: code:addons/web/static/src/js/control_panel/search_utils.js:0
 #, python-format
 msgid "greater than"
-msgstr ""
+msgstr "mayor que"
 
 #. module: web
 #. openerp-web
@@ -4924,7 +4932,7 @@ msgstr ""
 #: code:addons/web/static/src/js/control_panel/search_utils.js:0
 #, python-format
 msgid "less than"
-msgstr ""
+msgstr "menos que"
 
 #. module: web
 #. openerp-web
@@ -4945,7 +4953,7 @@ msgstr ""
 #: code:addons/web/static/src/js/views/file_upload_mixin.js:0
 #, python-format
 msgid "message: %s"
-msgstr ""
+msgstr "message: %s"
 
 #. module: web
 #. openerp-web
@@ -5017,7 +5025,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/kanban.xml:0
 #, python-format
 msgid "remaining)"
-msgstr ""
+msgstr "restante)"
 
 #. module: web
 #. openerp-web
