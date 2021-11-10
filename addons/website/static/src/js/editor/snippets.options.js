@@ -140,7 +140,9 @@ const FontFamilyPickerUserValueWidget = SelectUserValueWidget.extend({
             }
         }
         const activeWidget = this._userValueWidgets.find(widget => !widget.isPreviewed() && widget.isActive());
-        this.menuTogglerEl.classList.add(`o_we_option_font_${activeWidget.el.dataset.font}`);
+        if (activeWidget) {
+            this.menuTogglerEl.classList.add(`o_we_option_font_${activeWidget.el.dataset.font}`);
+        }
     },
 
     //--------------------------------------------------------------------------
@@ -464,6 +466,11 @@ options.Class.include({
                 return weUtils.getCSSVariableValue(params.variable);
             }
             case 'customizeWebsiteColor': {
+                // TODO adapt in master
+                const bugfixedValue = weUtils.getCSSVariableValue(`bugfixed-${params.color}`);
+                if (bugfixedValue) {
+                    return bugfixedValue;
+                }
                 return weUtils.getCSSVariableValue(params.color);
             }
         }
@@ -2567,6 +2574,7 @@ options.registry.ScrollButton = options.Class.extend({
                     'justify-content-center',
                     'mx-auto',
                     'bg-primary',
+                    'o_not_editable',
                 );
                 anchor.href = '#';
                 anchor.contentEditable = "false";

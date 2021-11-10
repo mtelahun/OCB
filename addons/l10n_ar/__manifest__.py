@@ -84,6 +84,7 @@ Master Data:
         'data/account_fiscal_template.xml',
         'data/uom_uom_data.xml',
         'data/l10n_latam.document.type.csv',
+        'data/l10n_latam.document.type.xml',
         'data/res_partner_data.xml',
         'data/res.currency.csv',
         'data/res.country.csv',
@@ -122,4 +123,5 @@ Master Data:
     'installable': True,
     'auto_install': False,
     'application': False,
+    'license': 'LGPL-3',
 }
