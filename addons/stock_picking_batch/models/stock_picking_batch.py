@@ -94,7 +94,7 @@ class StockPickingBatch(models.Model):
         batchs = self.filtered(lambda batch: batch.state not in ['cancel', 'done'])
         for batch in batchs:
             if not batch.picking_ids:
-                return
+                continue
             # Cancels automatically the batch picking if all its transfers are cancelled.
             if all(picking.state == 'cancel' for picking in batch.picking_ids):
                 batch.state = 'cancel'
@@ -104,7 +104,8 @@ class StockPickingBatch(models.Model):
 
     @api.depends('picking_ids', 'picking_ids.scheduled_date')
     def _compute_scheduled_date(self):
-        self.scheduled_date = min(self.picking_ids.filtered('scheduled_date').mapped('scheduled_date'), default=False)
+        for rec in self:
+            rec.scheduled_date = min(rec.picking_ids.filtered('scheduled_date').mapped('scheduled_date'), default=False)
 
     @api.onchange('scheduled_date')
     def onchange_scheduled_date(self):

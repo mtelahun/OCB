@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import datetime
+from freezegun import freeze_time
+
 from odoo.addons.crm.models.crm_lead import PARTNER_FIELDS_TO_SYNC, PARTNER_ADDRESS_FIELDS_TO_SYNC
 from odoo.addons.crm.tests.common import TestCrmCommon, INCOMING_EMAIL
 from odoo.addons.phone_validation.tools.phone_validation import phone_format
@@ -371,6 +374,14 @@ class TestCRMLead(TestCrmCommon):
         self.assertEqual(lead.stage_id, self.stage_gen_won)  # generic won stage has lower sequence than team won stage
 
     @users('user_sales_leads')
+    @freeze_time("2012-01-14")
+    def test_crm_lead_lost_date_closed(self):
+        self.assertFalse(self.lead_1.date_closed, "Initially, closed date is not set")
+        # Mark the lead as lost
+        self.lead_1.action_set_lost()
+        self.assertEqual(self.lead_1.date_closed, datetime.now(), "Closed date is updated after marking lead as lost")
+
+    @users('user_sales_leads')
     def test_crm_lead_update_contact(self):
         # ensure initial data, especially for corner cases
         self.assertFalse(self.contact_company_1.phone)
@@ -485,3 +496,26 @@ class TestCRMLead(TestCrmCommon):
         self.assertEqual(lead_1, self.env['crm.lead'].search([
             ('phone_mobile_search', 'like', '+32485001122')
         ]))
+
+    def test_no_date_closed_update_between_won_stages(self):
+        # Test for one won lead
+        stage_team1_won2 = self.env['crm.stage'].create({
+            'name': 'Won2',
+            'sequence': 75,
+            'team_id': self.sales_team_1.id,
+            'is_won': True,
+        })
+        won_lead = self.lead_team_1_won
+        date_closed = datetime.strptime('2020-02-02 15:00', '%Y-%m-%d %H:%M')
+        won_lead.date_closed = date_closed
+        with freeze_time('2020-02-02 18:00'):
+            won_lead.stage_id = stage_team1_won2
+        self.assertEqual(won_lead.date_closed, date_closed)
+
+        # Test for one won and one unwon lead
+        leads = won_lead + self.lead_1
+        self.assertFalse(self.lead_1.date_closed)
+        with freeze_time('2020-02-02 18:00'):
+            leads.stage_id = self.stage_team1_won
+        self.assertEqual(won_lead.date_closed, date_closed)
+        self.assertEqual(self.lead_1.date_closed, datetime.strptime('2020-02-02 18:00', '%Y-%m-%d %H:%M'))

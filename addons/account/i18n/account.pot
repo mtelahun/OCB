@@ -6264,6 +6264,14 @@ msgstr ""
 #: code:addons/account/models/account_tax.py:0
 #, python-format
 msgid ""
+"Invoice and credit note repartition should have at least one tax repartition"
+" line."
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/account_tax.py:0
+#, python-format
+msgid ""
 "Invoice and credit note distribution should have the same number of lines."
 msgstr ""
 
@@ -9331,6 +9339,12 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_full_reconcile__partial_reconcile_ids
 msgid "Reconciliation Parts"
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/partner.py:0
+#, python-format
+msgid "Record cannot be deleted. Partner used in Accounting"
 msgstr ""
 
 #. module: account
@@ -14098,4 +14112,10 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_bank_statement_form
 msgid "→ Count"
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/account_analytic_default.py:31
+#, python-format
+msgid "An analytic default requires an analytic account or an analytic tag used for analytic distribution."
 msgstr ""
